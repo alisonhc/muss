@@ -59,24 +59,15 @@ def get_language_from_model_name(model_name):
     return re.match('(..)_*', model_name).groups()[0]
 
 
-def get_muss_preprocessors(model_name):
+def get_muss_preprocessors(model_name, processor_args):
     language = get_language_from_model_name(model_name)
+
     preprocessors_kwargs = {
-        'LengthRatioPreprocessor': {'target_ratio': TOKENS_RATIO["LengthRatioPreprocessor"], 'use_short_name': False},
-        'ReplaceOnlyLevenshteinPreprocessor': {
-            'target_ratio': TOKENS_RATIO["ReplaceOnlyLevenshteinPreprocessor"],
-            'use_short_name': False,
-        },
-        'WordRankRatioPreprocessor': {
-            'target_ratio': TOKENS_RATIO["WordRankRatioPreprocessor"],
-            'language': language,
-            'use_short_name': False,
-        },
-        'DependencyTreeDepthRatioPreprocessor': {
-            'target_ratio': TOKENS_RATIO["DependencyTreeDepthRatioPreprocessor"],
-            'language': language,
-            'use_short_name': False,
-        },
+        'LengthRatioPreprocessor': {'target_ratio': processor_args.len_ratio, 'use_short_name': False},
+        # 'LengthRatioPreprocessor': {'target_ratio': 0.9, 'use_short_name': False},
+        'ReplaceOnlyLevenshteinPreprocessor': {'target_ratio': processor_args.lev_sim, 'use_short_name': False},
+        'WordRankRatioPreprocessor': {'target_ratio': processor_args.word_rank, 'language': language, 'use_short_name': False},
+        'DependencyTreeDepthRatioPreprocessor': {'target_ratio': processor_args.tree_depth, 'language': language, 'use_short_name': False},
     }
     if is_model_using_mbart(model_name):
         preprocessors_kwargs['SentencePiecePreprocessor'] = {
@@ -88,19 +79,23 @@ def get_muss_preprocessors(model_name):
     return get_preprocessors(preprocessors_kwargs)
 
 
-def simplify_sentences(source_sentences, model_name='muss_en_wikilarge_mined'):
-    # Best ACCESS parameter values for the en_bart_access_wikilarge_mined model, ideally we would need to use another set of parameters for other models.
+def simplify_sentences(source_sentences, processor_args, model_name='muss_en_wikilarge_mined'):
+    # Best ACCESS parameter values for the
+    # en_bart_access_wikilarge_mined model, ideally we would
+    # need to use another set of parameters for other
+    # models.
+    # import pdb; pdb.set_trace()
     exp_dir = get_model_path(model_name)
-    preprocessors = get_muss_preprocessors(model_name)
+    preprocessors = get_muss_preprocessors(model_name, processor_args)
     generate_kwargs = {}
     if is_model_using_mbart(model_name):
         generate_kwargs['task'] = 'translation_from_pretrained_bart'
-        generate_kwargs['langs'] = get_mbart_languages_from_model(model_name)
+        generate_kwargs[
+            'langs'
+        ] = 'ar_AR,cs_CZ,de_DE,en_XX,es_XX,et_EE,fi_FI,fr_XX,gu_IN,hi_IN,it_IT,ja_XX,kk_KZ,ko_KR,lt_LT,lv_LV,my_MM,ne_NP,nl_XX,ro_RO,ru_RU,si_LK,tr_TR,vi_VN,zh_CN'  # noqa: E501
     simplifier = get_fairseq_simplifier(exp_dir, **generate_kwargs)
     simplifier = get_preprocessed_simplifier(simplifier, preprocessors=preprocessors)
     source_path = get_temp_filepath()
     write_lines(source_sentences, source_path)
     pred_path = simplifier(source_path)
-    print('\n' + '#' * 80)
-    print(f'> Translated file: {pred_path}')
     return read_lines(pred_path)
