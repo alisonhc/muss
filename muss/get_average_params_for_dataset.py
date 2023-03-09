@@ -16,7 +16,11 @@ grid_params = {
     'lev_sims_down': [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9],
     'depth_ratios_down': [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
     'rank_ratios_down': [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9],
-    'len_ratios_down': [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9]
+    'len_ratios_down': [0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9],
+    'lev_sims_up': [0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9],
+    'depth_ratios_up': [1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7],
+    'rank_ratios_up': [1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4],
+    'len_ratios_up': [1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4]
 }
 
 
@@ -73,6 +77,7 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
                     if sari > best_sari:
                         best_sari = sari
                         best_processor_args = processor_args
+    print(mod_name, direc)
     print(best_sari)
     print(best_processor_args)
 
@@ -91,5 +96,7 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase']['ori'])
             outs.append(obj['paraphrase']['para'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
+    mod_name = 'muss_en_mined'
+    print(data_path)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='down',
-                        model_name='muss_en_wikilarge_mined')
+                        model_name=mod_name)
