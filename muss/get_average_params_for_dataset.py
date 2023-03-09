@@ -65,12 +65,16 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
     len_options = grid_params[f'len_ratios_{direc}']
     best_sari = 0.
     best_processor_args = None
+    num_files = 0
     for lev in lev_options:
         for depth in depth_options:
             for rank in rank_options:
                 for length in len_options:
+                    num_files += 1
+                    print(num_files)
                     processor_args = argparse.Namespace(len_ratio=length, lev_sim=lev,
                                                         tree_depth=depth, word_rank=rank)
+                    print(processor_args)
                     pred_sentences = simplify_sentences(all_inputs, processor_args, model_name=model_name)
                     sari = corpus_sari(orig_sents=all_inputs, sys_sents=pred_sentences,
                                        refs_sents=[all_outputs], lowercase=True)
