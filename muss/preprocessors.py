@@ -130,13 +130,14 @@ class AbstractPreprocessor(ABC):
             encoder_filepath = get_temp_filepath(create=True)
         with open(output_filepath, 'w', encoding='utf-8') as f:
             with open(input_filepath) as inp_reader:
-                with open(encoder_filepath) as enc_reader:
-                    inp_lines = inp_reader.readlines()
-                    enc_lines = enc_reader.readlines()
-            for i in range(len(inp_lines)):
-                inp_line = inp_lines[i].rstrip('\n') if inp_lines[i] is not None else None
-                enc_line = enc_lines[i].rstrip('\n') if enc_lines[i] is not None else None
-                f.write(self.encode_sentence(inp_line, enc_line) + '\n')
+                # with open(encoder_filepath) as enc_reader:
+                # inp_lines = inp_reader.readlines()
+                    # enc_lines = enc_reader.readlines()
+                for line in inp_reader:
+            # for i in range(len(inp_lines)):
+                    inp_line = line.rstrip('\n') if line is not None else None
+                    enc_line = None
+                    f.write(self.encode_sentence(inp_line, enc_line) + '\n')
             # for input_line, encoder_line in yield_lines_in_parallel([input_filepath, encoder_filepath], strict=False):
             #     f.write(self.encode_sentence(input_line, encoder_line) + '\n')
 
