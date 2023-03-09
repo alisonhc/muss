@@ -72,7 +72,7 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
                                        refs_sents=[all_outputs], lowercase=True)
                     if sari > best_sari:
                         best_sari = sari
-                        best_processor_args = [processor_args]
+                        best_processor_args = processor_args
     print(best_sari)
     print(best_processor_args)
 
