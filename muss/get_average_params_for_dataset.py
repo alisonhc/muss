@@ -66,6 +66,7 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
     best_sari = 0.
     best_processor_args = None
     num_files = 0
+    best_sari_ind = None
     for lev in lev_options:
         for depth in depth_options:
             for rank in rank_options:
@@ -81,9 +82,13 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
                     if sari > best_sari:
                         best_sari = sari
                         best_processor_args = processor_args
+                        best_sari_ind = num_files
+                        print(f'new best sari {best_sari} at ind {best_sari_ind}')
     print(mod_name, direc)
     print(best_sari)
     print(best_processor_args)
+    print(best_sari_ind)
+
 
 
 

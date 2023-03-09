@@ -87,6 +87,7 @@ def run_command(cmd, mute=False):
 @contextmanager
 def open_files(filepaths, mode='r'):
     files = []
+    print(f'num filepaths: {len(filepaths)}')
     try:
         files = [Path(filepath).open(mode, encoding='utf-8') for filepath in filepaths]
         yield files
