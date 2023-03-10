@@ -105,7 +105,7 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase']['ori'])
             outs.append(obj['paraphrase']['para'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
-    mod_name = 'muss_en_mined'
+    mod_name = 'muss_en_wikilarge_mined'
     print(data_path)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='down',
                         model_name=mod_name)
