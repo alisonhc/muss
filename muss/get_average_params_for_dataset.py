@@ -96,8 +96,8 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
 
 
 if __name__ == '__main__':
-    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
-    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_test_data_with_repeats.json'
+    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
+    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_test_data_with_repeats.json'
     inp_ori_or_para = 'para'
     inps = []
     outs = []
