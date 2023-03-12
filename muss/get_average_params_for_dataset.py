@@ -58,7 +58,7 @@ def get_all_feature_results(inp_sents: list, out_sents: list):
 
 
 def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_en_wikilarge_mined',
-                        best_sari=0., best_sari_ind=None):
+                        best_sari=0., start_ind=None):
     # sample 50 pairs
     lev_options = grid_params[f'lev_sims_{direc}']
     depth_options = grid_params[f'depth_ratios_{direc}']
@@ -66,12 +66,13 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
     len_options = grid_params[f'len_ratios_{direc}']
     best_processor_args = None
     ind = 0
+    best_sari_ind = start_ind if start_ind else 0
     for lev in lev_options:
         for depth in depth_options:
             for rank in rank_options:
                 for length in len_options:
                     ind += 1
-                    if best_sari_ind and ind > best_sari_ind:
+                    if start_ind and ind > best_sari_ind:
                         print(ind)
                         processor_args = argparse.Namespace(len_ratio=length, lev_sim=lev,
                                                             tree_depth=depth, word_rank=rank)
