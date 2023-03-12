@@ -57,33 +57,33 @@ def get_all_feature_results(inp_sents: list, out_sents: list):
     })
 
 
-def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_en_wikilarge_mined'):
+def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_en_wikilarge_mined',
+                        best_sari=0., best_sari_ind=None):
     # sample 50 pairs
     lev_options = grid_params[f'lev_sims_{direc}']
     depth_options = grid_params[f'depth_ratios_{direc}']
     rank_options = grid_params[f'rank_ratios_{direc}']
     len_options = grid_params[f'len_ratios_{direc}']
-    best_sari = 0.
     best_processor_args = None
-    num_files = 0
-    best_sari_ind = None
+    ind = 0
     for lev in lev_options:
         for depth in depth_options:
             for rank in rank_options:
                 for length in len_options:
-                    num_files += 1
-                    print(num_files)
-                    processor_args = argparse.Namespace(len_ratio=length, lev_sim=lev,
-                                                        tree_depth=depth, word_rank=rank)
-                    print(processor_args)
-                    pred_sentences = simplify_sentences(all_inputs, processor_args, model_name=model_name)
-                    sari = corpus_sari(orig_sents=all_inputs, sys_sents=pred_sentences,
-                                       refs_sents=[all_outputs], lowercase=True)
-                    if sari > best_sari:
-                        best_sari = sari
-                        best_processor_args = processor_args
-                        best_sari_ind = num_files
-                        print(f'new best sari {best_sari} at ind {best_sari_ind}')
+                    ind += 1
+                    if best_sari_ind and ind > best_sari_ind:
+                        print(ind)
+                        processor_args = argparse.Namespace(len_ratio=length, lev_sim=lev,
+                                                            tree_depth=depth, word_rank=rank)
+                        print(processor_args)
+                        pred_sentences = simplify_sentences(all_inputs, processor_args, model_name=model_name)
+                        sari = corpus_sari(orig_sents=all_inputs, sys_sents=pred_sentences,
+                                           refs_sents=[all_outputs], lowercase=True)
+                        if sari > best_sari:
+                            best_sari = sari
+                            best_processor_args = processor_args
+                            best_sari_ind = ind
+                            print(f'new best sari {best_sari} at ind {best_sari_ind}')
     print(mod_name, direc)
     print(best_sari)
     print(best_processor_args)
@@ -93,11 +93,16 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
 
 
 
-
+"""
+Mined News Up failed after index 517, best sari
+38.621886701186085 at ind 334
+335
+Namespace(len_ratio=1.35, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
+"""
 
 if __name__ == '__main__':
-    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
-    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_test_data_with_repeats.json'
+    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
+    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_with_repeats.json'
     inp_ori_or_para = 'para'
     inps = []
     outs = []
@@ -106,7 +111,8 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase'][inp_ori_or_para])
             outs.append(obj['paraphrase']['para' if inp_ori_or_para == 'ori' else 'ori'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
-    mod_name = 'muss_en_wikilarge_mined'
+    mod_name = 'muss_en_mined'
     print(data_path)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
-                        model_name=mod_name)
+                        model_name=mod_name, best_sari=38.621886701186085,
+                        best_sari_ind=334)
