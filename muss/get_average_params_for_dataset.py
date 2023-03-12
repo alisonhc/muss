@@ -101,8 +101,8 @@ Namespace(len_ratio=1.35, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
 """
 
 if __name__ == '__main__':
-    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
-    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_with_repeats.json'
+    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
+    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_with_repeats.json'
     inp_ori_or_para = 'para'
     inps = []
     outs = []
@@ -114,5 +114,4 @@ if __name__ == '__main__':
     mod_name = 'muss_en_mined'
     print(data_path)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
-                        model_name=mod_name, best_sari=38.621886701186085,
-                        best_sari_ind=334)
+                        model_name=mod_name)
