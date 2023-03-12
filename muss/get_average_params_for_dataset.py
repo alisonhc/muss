@@ -72,7 +72,7 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
             for rank in rank_options:
                 for length in len_options:
                     ind += 1
-                    if start_ind and ind > best_sari_ind:
+                    if not start_ind or ind > best_sari_ind:
                         print(ind)
                         processor_args = argparse.Namespace(len_ratio=length, lev_sim=lev,
                                                             tree_depth=depth, word_rank=rank)
