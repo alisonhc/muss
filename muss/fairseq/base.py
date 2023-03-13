@@ -202,7 +202,7 @@ def fairseq_generate(
     diverse_beam_groups=None,
     diverse_beam_strength=0.5,
     sampling=False,
-    max_tokens=8000,
+    max_tokens=300,  # was 8000
     source_lang='complex',
     target_lang='simple',
     **kwargs,
