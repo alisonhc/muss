@@ -102,8 +102,9 @@ Namespace(len_ratio=1.35, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
 """
 
 if __name__ == '__main__':
-    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
+    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
     # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_with_repeats.json'
+    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_unfiltered_up_val_4_to_0_1to1.json'
     inp_ori_or_para = 'para'
     inps = []
     outs = []
@@ -112,7 +113,9 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase'][inp_ori_or_para])
             outs.append(obj['paraphrase']['para' if inp_ori_or_para == 'ori' else 'ori'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
-    mod_name = 'muss_en_mined'
+    mod_name = 'muss_en_wikilarge_mined'
     print(data_path)
+    # do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
+    #                     model_name=mod_name, best_sari=38.621886701186085, start_ind=334)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
-                        model_name=mod_name, best_sari=38.621886701186085, start_ind=334)
+                        model_name=mod_name)
