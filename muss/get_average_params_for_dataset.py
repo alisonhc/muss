@@ -104,7 +104,8 @@ Namespace(len_ratio=1.35, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
 if __name__ == '__main__':
     # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_all_val.json'
     # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_with_repeats.json'
-    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_unfiltered_up_4_to_0_1to1.json'
+    # data_path = '/home/nlplab/achi/Paraphrase_Level_Up/newsela_exps/news_manual_unfiltered_up_4_to_0_1to1.json'
+    data_path = '/home/nlplab/achi/Paraphrase_Level_Up/asset_val_data_random_ref.json'
     inp_ori_or_para = 'para'
     inps = []
     outs = []
