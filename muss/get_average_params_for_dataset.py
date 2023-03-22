@@ -114,7 +114,7 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase'][inp_ori_or_para])
             outs.append(obj['paraphrase']['para' if inp_ori_or_para == 'ori' else 'ori'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
-    mod_name = 'muss_en_wikilarge_mined'
+    mod_name = 'muss_en_mined'
     print(data_path)
     # do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
     #                     model_name=mod_name, best_sari=38.621886701186085, start_ind=334)
