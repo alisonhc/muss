@@ -98,7 +98,15 @@ def do_param_gridsearch(all_inputs, all_outputs, direc='down', model_name='muss_
 Mined News Up failed after index 517, best sari
 38.621886701186085 at ind 334
 335
-Namespace(len_ratio=1.35, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
+Namespace(len_ratio=1.3, lev_sim=0.55, tree_depth=1.7, word_rank=1.35)
+"""
+
+
+"""
+wiki asset up sample
+new best sari 42.79796172233208 at ind 541
+542
+Namespace(len_ratio=1.15, lev_sim=0.6, tree_depth=1.5, word_rank=1.1)
 """
 
 if __name__ == '__main__':
@@ -114,9 +122,9 @@ if __name__ == '__main__':
             inps.append(obj['paraphrase'][inp_ori_or_para])
             outs.append(obj['paraphrase']['para' if inp_ori_or_para == 'ori' else 'ori'])
     # get_all_feature_results(inp_sents=inps, out_sents=outs)
-    mod_name = 'muss_en_mined'
+    mod_name = 'muss_en_wikilarge_mined'
     print(data_path)
-    # do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
-    #                     model_name=mod_name, best_sari=38.621886701186085, start_ind=334)
     do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
-                        model_name=mod_name)
+                        model_name=mod_name, best_sari=42.79796172233208, start_ind=633)
+    # do_param_gridsearch(all_inputs=inps, all_outputs=outs, direc='up',
+    #                     model_name=mod_name)
